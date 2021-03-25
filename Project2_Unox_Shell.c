@@ -11,7 +11,7 @@
 #include <sys/types.h>
 
 
-#define LSH_TOK_BUFSIZE 64
+#define TOK_BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
 #define READ_END 0 
 #define WRITE_END 1
@@ -23,7 +23,7 @@
  */
 char** split_line(char* line, char* chargs[]) {
     
-    int bufsize = LSH_TOK_BUFSIZE, position = 0;
+    int bufsize = TOK_BUFSIZE, position = 0;
     char **tokens = malloc(bufsize * sizeof(char*));
     char *token, **tokens_backup;
     
@@ -32,7 +32,7 @@ char** split_line(char* line, char* chargs[]) {
     exit(EXIT_FAILURE);
     }
 
-    token = strtok(line, LSH_TOK_DELIM);
+    token = strtok(line, TOK_DELIM);
       chargs[0] = token;
   
     char** redirect = malloc(2 * sizeof(char*));
@@ -45,12 +45,12 @@ char** split_line(char* line, char* chargs[]) {
 
     while(token != NULL){
       //put token into char args vector
-      token = strtok(NULL, LSH_TOK_DELIM);
+      token = strtok(NULL, TOK_DELIM);
       if(token == NULL)
           break;
     tokens_backup = tokens;
     if (!strncmp(token, ">", 1)){
-          token = strtok(NULL, LSH_TOK_DELIM);
+          token = strtok(NULL, TOK_DELIM);
           redirect[0] = "o";
           redirect[1] = token;
         return redirect;
@@ -61,13 +61,13 @@ char** split_line(char* line, char* chargs[]) {
           }
       else
         if (!strncmp(token, "<", 1)){
-          token = strtok(NULL, LSH_TOK_DELIM);
+          token = strtok(NULL, TOK_DELIM);
           redirect[0] = "i";
           redirect[1] = token;
           return redirect;
       }
       if (position >= bufsize) {
-      bufsize += LSH_TOK_BUFSIZE;
+      bufsize += TOK_BUFSIZE;
       tokens_backup = tokens;
       tokens = realloc(tokens, bufsize * sizeof(char*));
       if (!tokens) {
