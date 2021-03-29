@@ -123,7 +123,7 @@ int shell_llp(void){
     while(!finished)
     {
         // command line 
-        printf("osh>a ");
+        printf("osh> ");
         // force flush to console  
         fflush(stdout);   
         // read into input from stdin
